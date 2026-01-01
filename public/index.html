@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Eshika Smart Bot AI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <img src="logo.png" class="logo" alt="Eshika Logo">
+    <div>
+      <h1>Eshika Smart Bot AI</h1>
+      <p class="intro">
+        Proudly I am Eshika Smart Bot AI, created by N. Rishi Kumar son of Chiranjeevi
+      </p>
+    </div>
+  </header>
+
+  <main class="chat-container">
+    <div id="chat"></div>
+
+    <div class="input-area">
+      <input id="userInput" type="text" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div class="voice-controls">
+      <button onclick="enableVoice()">🔊 Voice ON</button>
+      <button onclick="disableVoice()">🔇 Voice OFF</button>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
