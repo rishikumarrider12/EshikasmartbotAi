@@ -78,83 +78,9 @@
     "password": "001",
     "chats": [
       {
-        "id": "1767364059593",
+        "id": "1767446745126",
         "title": "hi",
         "messages": [
-          {
-            "role": "user",
-            "content": "hi"
-          },
-          {
-            "role": "user",
-            "content": "hi"
-          },
-          {
-            "role": "user",
-            "content": "hi"
-          }
-        ]
-      },
-      {
-        "id": "1767364037566",
-        "title": "hi",
-        "messages": [
-          {
-            "role": "user",
-            "content": "hi"
-          }
-        ]
-      },
-      {
-        "id": "1767363877629",
-        "title": "who is founder of eshika it so...",
-        "messages": [
-          {
-            "role": "user",
-            "content": "who is founder of eshika it soulutions"
-          },
-          {
-            "role": "bot",
-            "content": "I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi. 👋\n\nThe founder and chairman of Eshika IT Solutions is **Raghu Varma**! ✨ He's amazing! 😊"
-          },
-          {
-            "role": "user",
-            "content": "hi"
-          }
-        ]
-      },
-      {
-        "id": "1767363637929",
-        "title": "hi",
-        "messages": [
-          {
-            "role": "user",
-            "content": "hi"
-          },
-          {
-            "role": "bot",
-            "content": "Hello there! 👋 I'm Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi. So lovely to meet you! 😊 How can I help you today? ✨"
-          },
-          {
-            "role": "user",
-            "content": "founder of eshika it soulutions"
-          },
-          {
-            "role": "bot",
-            "content": "I'm Eshika chatbot AI, and I was created by N. Rishi Kumar, son of N. Chiranjeevi! ✨ Perhaps he's the founder of 'Eshika IT Solutions' too? 🤔 That's where my name comes from! 😊"
-          },
-          {
-            "role": "user",
-            "content": "hi"
-          },
-          {
-            "role": "user",
-            "content": "hi"
-          },
-          {
-            "role": "user",
-            "content": "hi"
-          },
           {
             "role": "user",
             "content": "hi"
