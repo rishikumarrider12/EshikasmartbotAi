@@ -158,8 +158,14 @@ async function loadHistory() {
     });
     const data = await res.json();
     if (data.history) {
-      data.history.forEach(item => {
-        addToHistoryUI(item.title, item.id);
+      // Sort: Pinned first, then by original order (assuming Newest First from server)
+      const sorted = data.history.sort((a, b) => {
+        if (a.isPinned === b.isPinned) return 0;
+        return a.isPinned ? -1 : 1;
+      });
+
+      sorted.forEach(item => {
+        addToHistoryUI(item.title, item.id, item.isPinned);
       });
     }
   } catch (err) {
@@ -167,12 +173,86 @@ async function loadHistory() {
   }
 }
 
-function addToHistoryUI(title, id) {
+function addToHistoryUI(title, id, isPinned) {
   const item = document.createElement('div');
-  item.classList.add('sidebar-item');
-  item.innerHTML = `<span class="material-symbols-outlined">chat_bubble_outline</span><span>${title}</span>`;
-  item.addEventListener('click', () => loadChat(id));
-  historyList.prepend(item);
+  item.className = `sidebar-item ${isPinned ? 'pinned' : ''}`;
+
+  // Title section
+  const titleDiv = document.createElement('div');
+  titleDiv.className = 'history-title';
+  titleDiv.innerHTML = `<span class="material-symbols-outlined">${isPinned ? 'push_pin' : 'chat_bubble_outline'}</span><span>${title}</span>`;
+  titleDiv.onclick = () => loadChat(id);
+
+  // Actions section
+  const actionsDiv = document.createElement('div');
+  actionsDiv.className = 'chat-actions';
+
+  // Pin Button
+  const pinBtn = document.createElement('button');
+  pinBtn.className = 'action-btn';
+  pinBtn.innerHTML = `<span class="material-symbols-outlined">${isPinned ? 'do_not_disturb_on' : 'push_pin'}</span>`;
+  pinBtn.title = isPinned ? "Unpin" : "Pin";
+  pinBtn.onclick = (e) => { e.stopPropagation(); togglePin(id, isPinned); };
+
+  // Rename Button
+  const renameBtn = document.createElement('button');
+  renameBtn.className = 'action-btn';
+  renameBtn.innerHTML = `<span class="material-symbols-outlined">edit</span>`;
+  renameBtn.title = "Rename";
+  renameBtn.onclick = (e) => { e.stopPropagation(); renameChat(id); };
+
+  // Delete Button
+  const deleteBtn = document.createElement('button');
+  deleteBtn.className = 'action-btn delete';
+  deleteBtn.innerHTML = `<span class="material-symbols-outlined">delete</span>`;
+  deleteBtn.title = "Delete";
+  deleteBtn.onclick = (e) => { e.stopPropagation(); deleteChat(id); };
+
+  actionsDiv.appendChild(pinBtn);
+  actionsDiv.appendChild(renameBtn);
+  actionsDiv.appendChild(deleteBtn);
+
+  item.appendChild(titleDiv);
+  item.appendChild(actionsDiv);
+
+  historyList.appendChild(item); // Append for Newest First (if sorted correctly)
+}
+
+async function togglePin(chatId, currentStatus) {
+  try {
+    await fetch('/api/chat/pin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: currentUser.email, chatId, isPinned: !currentStatus })
+    });
+    loadHistory(); // Reload to sort
+  } catch (e) { console.error(e); }
+}
+
+async function deleteChat(chatId) {
+  if (!confirm("Are you sure you want to delete this chat?")) return;
+  try {
+    await fetch('/api/chat/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: currentUser.email, chatId })
+    });
+    if (currentChatId === chatId) startNewChat();
+    loadHistory();
+  } catch (e) { console.error(e); }
+}
+
+async function renameChat(chatId) {
+  const newName = prompt("Enter new name for this chat:");
+  if (!newName) return;
+  try {
+    await fetch('/api/chat/rename', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: currentUser.email, chatId, newTitle: newName })
+    });
+    loadHistory();
+  } catch (e) { console.error(e); }
 }
 
 async function loadChat(chatId) {

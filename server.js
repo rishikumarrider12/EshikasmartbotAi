@@ -89,7 +89,8 @@ app.post("/api/history", (req, res) => {
 
   const history = user.chats.map(chat => ({
     id: chat.id,
-    title: chat.title
+    title: chat.title,
+    isPinned: chat.isPinned || false
   }));
   res.json({ history });
 });
@@ -103,6 +104,45 @@ app.post("/api/chat/load", (req, res) => {
   if (!chat) return res.status(404).json({ error: "Chat not found" });
 
   res.json({ chat });
+});
+
+app.post("/api/chat/delete", (req, res) => {
+  const { email, chatId } = req.body;
+  const user = users.find(u => u.email === email);
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  const chatIndex = user.chats.findIndex(c => c.id === chatId);
+  if (chatIndex === -1) return res.status(404).json({ error: "Chat not found" });
+
+  user.chats.splice(chatIndex, 1);
+  saveUsers();
+  res.json({ success: true });
+});
+
+app.post("/api/chat/rename", (req, res) => {
+  const { email, chatId, newTitle } = req.body;
+  const user = users.find(u => u.email === email);
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  const chat = user.chats.find(c => c.id === chatId);
+  if (!chat) return res.status(404).json({ error: "Chat not found" });
+
+  chat.title = newTitle;
+  saveUsers();
+  res.json({ success: true });
+});
+
+app.post("/api/chat/pin", (req, res) => {
+  const { email, chatId, isPinned } = req.body;
+  const user = users.find(u => u.email === email);
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  const chat = user.chats.find(c => c.id === chatId);
+  if (!chat) return res.status(404).json({ error: "Chat not found" });
+
+  chat.isPinned = isPinned;
+  saveUsers();
+  res.json({ success: true });
 });
 
 app.post("/api/account/update", (req, res) => {

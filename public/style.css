@@ -249,6 +249,83 @@ button:hover {
     background: var(--hover-bg);
 }
 
+.sidebar-item {
+    justify-content: space-between;
+    padding-right: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.history-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-right: 8px;
+}
+
+.history-title span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chat-actions {
+    display: none;
+    align-items: center;
+    gap: 2px;
+    background: var(--sidebar-bg);
+    padding-left: 4px;
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: -8px 0 12px var(--sidebar-bg);
+}
+
+.sidebar-item:hover .chat-actions {
+    display: flex;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-btn span {
+    font-size: 1.1rem;
+}
+
+.action-btn:hover {
+    color: var(--text-primary);
+    background: #444;
+}
+
+.action-btn.delete:hover {
+    color: #ff6b6b;
+}
+
+.sidebar-item.pinned {
+    border-left: 3px solid var(--accent-blue);
+    background: rgba(168, 199, 250, 0.1);
+    padding-left: 9px;
+    /* Compensate for border */
+}
+
+.sidebar-item.pinned .material-symbols-outlined {
+    fill: 1;
+    /* Filled icon style for pin if needed, or handled via class */
+}
+
 .user-profile {
     display: flex;
     align-items: center;
