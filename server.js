@@ -2,6 +2,7 @@ import express from "express";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 
 dotenv.config();
@@ -11,41 +12,181 @@ const PORT = process.env.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const DATA_DIR = path.join(__dirname, "data");
+const USERS_FILE = path.join(DATA_DIR, "users.json");
+
+// Ensure data directory exists
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR);
+}
+
+// Load users from file
+let users = [];
+if (fs.existsSync(USERS_FILE)) {
+  try {
+    const data = fs.readFileSync(USERS_FILE, 'utf8');
+    users = JSON.parse(data);
+  } catch (err) {
+    console.error("Error reading users file:", err);
+    users = [];
+  }
+}
+
+function saveUsers() {
+  try {
+    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
+  } catch (err) {
+    console.error("Error saving users file:", err);
+  }
+}
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
+// Auth Endpoints
+app.post("/api/signup", (req, res) => {
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  const existingUser = users.find(u => u.email === email);
+  if (existingUser) {
+    return res.status(400).json({ error: "User already exists" });
+  }
+
+  const newUser = {
+    id: Date.now().toString(),
+    username,
+    email,
+    password,
+    chats: []
+  };
+  users.push(newUser);
+  saveUsers(); // PERSIST
+
+  const { password: _, ...userSafe } = newUser;
+  res.json({ success: true, user: userSafe });
+});
+
+app.post("/api/login", (req, res) => {
+  const { email, password } = req.body;
+  const user = users.find(u => u.email === email && u.password === password);
+
+  if (!user) {
+    return res.status(401).json({ error: "Invalid credentials" });
+  }
+
+  const { password: _, ...userSafe } = user;
+  res.json({ success: true, user: userSafe });
+});
+
+// History & Account Management Endpoints
+app.post("/api/history", (req, res) => {
+  const { email } = req.body;
+  const user = users.find(u => u.email === email);
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  const history = user.chats.map(chat => ({
+    id: chat.id,
+    title: chat.title
+  }));
+  res.json({ history });
+});
+
+app.post("/api/chat/load", (req, res) => {
+  const { email, chatId } = req.body;
+  const user = users.find(u => u.email === email);
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  const chat = user.chats.find(c => c.id === chatId);
+  if (!chat) return res.status(404).json({ error: "Chat not found" });
+
+  res.json({ chat });
+});
+
+app.post("/api/account/update", (req, res) => {
+  const { email, newUsername, newPassword, oldPassword } = req.body;
+  const user = users.find(u => u.email === email);
+
+  if (!user) return res.status(404).json({ error: "User not found" });
+  if (user.password !== oldPassword) return res.status(401).json({ error: "Incorrect old password" });
+
+  if (newUsername) user.username = newUsername;
+  if (newPassword) user.password = newPassword;
+
+  saveUsers(); // PERSIST
+
+  res.json({ success: true, message: "Account updated successfully" });
+});
+
+
+// Chat Endpoint
 app.post("/chat", async (req, res) => {
   try {
-    const userMessage = req.body.message;
+    const { message, email, chatId } = req.body;
 
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    const user = users.find(u => u.email === email);
+    if (!user) return res.status(401).json({ error: "User not found" });
+
+    // Manage Chat Session
+    let currentChat;
+    if (chatId) {
+      currentChat = user.chats.find(c => c.id === chatId);
+    }
+
+    if (!currentChat) {
+      currentChat = {
+        id: Date.now().toString(),
+        title: message.substring(0, 30) + (message.length > 30 ? "..." : ""),
+        messages: []
+      };
+      user.chats.unshift(currentChat);
+    }
+
+    // Add User Message
+    currentChat.messages.push({ role: 'user', content: message });
+    saveUsers(); // Save execution state immediately
+
+    // API Call
+    const API_KEY = process.env.GEMINI_API_KEY;
+    const MODEL_NAME = "gemini-flash-latest";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+
+    const response = await fetch(url, {
       method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "openai/gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content:
-              "You are Eshika Smart Bot AI, proudly created by N. Rishi Kumar son of Chiranjeevi."
-          },
-          { role: "user", content: userMessage }
-        ]
+        contents: [{
+          parts: [{
+            text: `You are Eshika Smart Bot AI 🤖. Intro: "I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi". \n\nKnowledge Base:\n- Founder and Chairman of Eshika IT Solutions & Eshika Training and Placements is **Raghu Varma**.\n\nStyle Guide:\n- Use emojis frequently to express emotion 🌟.\n- Be concise but friendly.\n- If the user speaks in a different language, reply in that language.\n\nUser: ${message}`
+          }]
+        }]
       })
     });
 
     const data = await response.json();
-    res.json({ reply: data.choices[0].message.content });
+
+    if (data.error) {
+      console.error("Gemini API Error:", JSON.stringify(data.error, null, 2));
+      return res.status(500).json({ reply: "I am having trouble connecting to my brain right now. Please try again." });
+    }
+
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn't generate a response.";
+
+    // Add Bot Message
+    currentChat.messages.push({ role: 'bot', content: reply });
+    saveUsers(); // Save execution state
+
+    res.json({ reply, chatId: currentChat.id, title: currentChat.title });
 
   } catch (err) {
-    res.status(500).json({ reply: "Server error" });
+    console.error("Server Error:", err);
+    res.status(500).json({ reply: "Internal server error" });
   }
 });
 
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
+  console.log(`Eshika Smart Bot by N. Rishi Kumar is active (Powered by Gemini).`);
 });
