@@ -231,20 +231,16 @@ app.post("/chat", async (req, res) => {
     if (data.error) {
       console.error("Gemini API Error Detail:", JSON.stringify(data.error, null, 2));
 
-      let reply = "I am having trouble connecting to my brain right now. Please try again.";
       const errorCode = data.error.code;
-      const errorMsg = data.error.message || "";
+      const errorMsg = data.error.message || "No error message provided";
+      let reply = "I am having trouble connecting to my brain right now. Please try again.";
 
       if (errorCode === 429) {
         reply = "I'm a bit overwhelmed right now (Quota Exceeded). Please try again in a minute! 😅";
       } else if (errorMsg.includes("API key")) {
         reply = "There's an issue with my API key connection. Please check the configuration. 🔑";
-      } else if (errorCode === 404) {
-        reply = `I couldn't find the model "${MODEL_NAME}". Please select a different one in settings. 🔍`;
-      } else if (errorCode === 400) {
-        reply = "I didn't understand that request. It might be too long or contains unsupported content. 🧩";
       } else {
-        reply = `Brain Error (${errorCode || 'Unknown'}): ${errorMsg || 'Something went wrong connection-wise.'}`;
+        reply = `Brain Error (${errorCode}): ${errorMsg} 🧩`;
       }
 
       return res.status(errorCode || 500).json({ reply });
