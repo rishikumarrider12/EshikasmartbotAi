@@ -373,6 +373,47 @@ function startNewChat() {
   sidebar.classList.remove('open');
 }
 
+// Text-to-Speech Logic
+let ttsEnabled = false;
+const speakerBtn = document.getElementById('speaker-btn');
+let voices = [];
+
+function loadVoices() {
+  voices = window.speechSynthesis.getVoices();
+}
+
+window.speechSynthesis.onvoiceschanged = loadVoices;
+
+speakerBtn.addEventListener('click', () => {
+  ttsEnabled = !ttsEnabled;
+  speakerBtn.innerHTML = ttsEnabled ?
+    '<span class="material-symbols-outlined">volume_up</span>' :
+    '<span class="material-symbols-outlined">volume_off</span>';
+
+  if (!ttsEnabled) {
+    window.speechSynthesis.cancel();
+  }
+});
+
+function speak(text) {
+  if (!ttsEnabled) return;
+
+  // Strip Markdown/HTML for speech
+  const cleanText = text.replace(/[*#_`]/g, '').replace(/<[^>]*>/g, '');
+
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  utterance.lang = langSelect.value;
+
+  // Try to find a voice matching the selected language
+  const matchingVoice = voices.find(v => v.lang.startsWith(utterance.lang));
+  if (matchingVoice) {
+    utterance.voice = matchingVoice;
+  }
+
+  window.speechSynthesis.speak(utterance);
+}
+
+
 async function sendMessage() {
   const text = messageInput.value.trim();
   if (!text) return;
@@ -396,11 +437,20 @@ async function sendMessage() {
       body: JSON.stringify({
         message: text,
         email: currentUser.email,
-        chatId: currentChatId
+        chatId: currentChatId,
+        language: langSelect.value
       })
     });
 
     const data = await res.json();
+
+    // Check for errors before parsing reply
+    if (data.error) {
+      throw new Error(data.error);
+    }
+    if (!data.reply) {
+      throw new Error("Invalid response from server");
+    }
 
     const loadingMsg = document.getElementById(loadingId);
     if (loadingMsg) loadingMsg.remove();
@@ -413,10 +463,14 @@ async function sendMessage() {
       loadHistory();
     }
 
+    // Auto-speak if enabled
+    speak(data.reply);
+
   } catch (err) {
     const loadingMsg = document.getElementById(loadingId);
     if (loadingMsg) loadingMsg.remove();
-    addMessage("Sorry, something went wrong.", 'bot');
+    console.error("Chat Error:", err);
+    addMessage("Sorry, something went wrong. " + (err.message || ''), 'bot');
   }
 }
 

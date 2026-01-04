@@ -164,7 +164,7 @@ app.post("/api/account/update", (req, res) => {
 // Chat Endpoint
 app.post("/chat", async (req, res) => {
   try {
-    const { message, email, chatId } = req.body;
+    const { message, email, chatId, language } = req.body;
 
     const user = users.find(u => u.email === email);
     if (!user) return res.status(401).json({ error: "User not found" });
@@ -188,10 +188,30 @@ app.post("/chat", async (req, res) => {
     currentChat.messages.push({ role: 'user', content: message });
     saveUsers(); // Save execution state immediately
 
+    // Image Generation Check (Pollinations.ai)
+    if (message.toLowerCase().startsWith('/image') ||
+      message.toLowerCase().startsWith('generate image') ||
+      message.toLowerCase().startsWith('draw')) {
+
+      const prompt = message.replace(/^\/image|generate image|draw/gi, '').trim();
+      if (prompt.length > 0) {
+        const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}`;
+        const reply = `Here is the image for "${prompt}":\n\n![${prompt}](${imageUrl})`;
+
+        // Add Bot Message
+        currentChat.messages.push({ role: 'bot', content: reply });
+        saveUsers();
+
+        return res.json({ reply, chatId: currentChat.id, title: currentChat.title });
+      }
+    }
+
     // API Call
     const API_KEY = process.env.GEMINI_API_KEY;
     const MODEL_NAME = "gemini-flash-latest";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+
+    const langInstruction = language ? ` Please reply in this language code: ${language}.` : "";
 
     const response = await fetch(url, {
       method: "POST",
@@ -199,7 +219,7 @@ app.post("/chat", async (req, res) => {
       body: JSON.stringify({
         contents: [{
           parts: [{
-            text: `You are Eshika Smart Bot AI 🤖. Intro: "I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi". \n\nKnowledge Base:\n- Founder and Chairman of Eshika IT Solutions & Eshika Training and Placements is **Raghu Varma**.\n\nStyle Guide:\n- Use emojis frequently to express emotion 🌟.\n- Be concise but friendly.\n- If the user speaks in a different language, reply in that language.\n\nUser: ${message}`
+            text: `You are Eshika Smart Bot AI 🤖. Intro: "I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi". \n\nKnowledge Base:\n- Founder and Chairman of Eshika IT Solutions & Eshika Training and Placements is **Raghu Varma**.\n\nStyle Guide:\n- Use emojis frequently to express emotion 🌟.\n- Be concise but friendly.\n- If the user speaks in a different language, reply in that language.${langInstruction}\n\nUser: ${message}`
           }]
         }]
       })
