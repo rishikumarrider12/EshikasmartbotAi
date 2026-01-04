@@ -108,7 +108,7 @@ async function handleAuth(type) {
     const password = document.getElementById('password-input').value;
     authError.textContent = '';
 
-    const endpoint = `/api/${type}`;
+    const endpoint = `api/auth.php?action=${type}`;
     const body = type === 'login' ? { email, password } : { username, email, password };
 
     try {
@@ -162,7 +162,7 @@ async function loadHistory() {
     if (!currentUser) return;
 
     try {
-        const res = await fetch('/api/history', {
+        const res = await fetch('api/history.php?action=list', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: currentUser.email })
@@ -204,10 +204,10 @@ function addToHistoryUI({ title, id, isPinned }) {
 
 async function togglePin(chatId, currentStatus) {
     try {
-        await fetch('/api/chat/pin', {
+        await fetch('api/history.php?action=pin', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: currentUser.email, chatId, isPinned: !currentStatus })
+            body: JSON.stringify({ email: currentUser.email, chatId })
         });
         loadHistory();
     } catch (e) { console.error("Failed to toggle pin:", e); }
@@ -216,7 +216,7 @@ async function togglePin(chatId, currentStatus) {
 async function deleteChat(chatId) {
     if (!confirm("Are you sure you want to delete this chat?")) return;
     try {
-        await fetch('/api/chat/delete', {
+        await fetch('api/history.php?action=delete', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: currentUser.email, chatId })
@@ -230,7 +230,7 @@ async function renameChat(chatId) {
     const newName = prompt("Enter new name for this chat:");
     if (!newName || newName.trim() === '') return;
     try {
-        await fetch('/api/chat/rename', {
+        await fetch('api/history.php?action=rename', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: currentUser.email, chatId, newTitle: newName.trim() })
@@ -241,7 +241,7 @@ async function renameChat(chatId) {
 
 async function loadChat(chatId) {
     try {
-        const res = await fetch('/api/chat/load', {
+        const res = await fetch('api/chat.php?action=load', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: currentUser.email, chatId })
@@ -287,7 +287,7 @@ async function updateAccount() {
     }
 
     try {
-        const res = await fetch('/api/account/update', {
+        const res = await fetch('api/auth.php?action=update', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: currentUser.email, oldPassword, newUsername, newPassword })
@@ -415,7 +415,7 @@ async function sendMessage() {
     const loadingId = addThinkingBubble();
 
     try {
-        const res = await fetch('/chat', {
+        const res = await fetch('api/chat.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -426,6 +426,7 @@ async function sendMessage() {
                 image: selectedImage // Add image data
             })
         });
+
 
         if (selectedImage) removeImage(); // Clear after sending
 
