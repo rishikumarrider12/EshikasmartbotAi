@@ -208,8 +208,9 @@ app.post("/chat", async (req, res) => {
 
     // API Call
     const API_KEY = process.env.GEMINI_API_KEY;
-    const MODEL_NAME = model || "gemini-flash-latest";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+    const MODEL_NAME = model || "gemini-1.5-flash-latest";
+    const cleanModelName = MODEL_NAME.startsWith('models/') ? MODEL_NAME : `models/${MODEL_NAME}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/${cleanModelName}:generateContent?key=${API_KEY}`;
 
     const langInstruction = language ? ` Please reply in this language code: ${language}.` : "";
 
@@ -228,16 +229,25 @@ app.post("/chat", async (req, res) => {
     const data = await response.json();
 
     if (data.error) {
-      console.error("Gemini API Error:", JSON.stringify(data.error, null, 2));
+      console.error("Gemini API Error Detail:", JSON.stringify(data.error, null, 2));
 
       let reply = "I am having trouble connecting to my brain right now. Please try again.";
-      if (data.error.code === 429) {
+      const errorCode = data.error.code;
+      const errorMsg = data.error.message || "";
+
+      if (errorCode === 429) {
         reply = "I'm a bit overwhelmed right now (Quota Exceeded). Please try again in a minute! 😅";
-      } else if (data.error.message && data.error.message.includes("API key")) {
+      } else if (errorMsg.includes("API key")) {
         reply = "There's an issue with my API key connection. Please check the configuration. 🔑";
+      } else if (errorCode === 404) {
+        reply = `I couldn't find the model "${MODEL_NAME}". Please select a different one in settings. 🔍`;
+      } else if (errorCode === 400) {
+        reply = "I didn't understand that request. It might be too long or contains unsupported content. 🧩";
+      } else {
+        reply = `Brain Error (${errorCode || 'Unknown'}): ${errorMsg || 'Something went wrong connection-wise.'}`;
       }
 
-      return res.status(500).json({ reply });
+      return res.status(errorCode || 500).json({ reply });
     }
 
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn't generate a response.";
@@ -249,8 +259,8 @@ app.post("/chat", async (req, res) => {
     res.json({ reply, chatId: currentChat.id, title: currentChat.title });
 
   } catch (err) {
-    console.error("Server Error:", err);
-    res.status(500).json({ reply: "Internal server error" });
+    console.error("Server-Side Error:", err);
+    res.status(500).json({ reply: `An internal server error occurred: ${err.message}` });
   }
 });
 
