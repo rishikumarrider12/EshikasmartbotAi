@@ -17,8 +17,8 @@ if ($action === 'login') {
 
     foreach ($users as $user) {
         if ($user['email'] === $email && $user['password'] === $password) {
-            unset($user['password']); // Don't send password back
-            sendResponse($user);
+            unset($user['password']);
+            sendResponse(['success' => true, 'user' => $user]);
         }
     }
     sendResponse(['error' => 'Invalid email or password'], 401);
@@ -45,7 +45,7 @@ if ($action === 'login') {
     saveUsers($users);
 
     unset($newUser['password']);
-    sendResponse($newUser);
+    sendResponse(['success' => true, 'user' => $newUser]);
 
 } elseif ($action === 'update') {
     $email = strtolower($input['email']);
@@ -66,7 +66,7 @@ if ($action === 'login') {
             }
             saveUsers($users);
             unset($user['password']);
-            sendResponse($user);
+            sendResponse(['success' => true, 'user' => $user]);
         }
     }
     sendResponse(['error' => 'User not found'], 404);

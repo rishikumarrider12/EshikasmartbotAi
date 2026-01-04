@@ -47,12 +47,15 @@ if ($action === 'rename') {
 } elseif ($action === 'pin') {
     foreach ($users[$userIndex]['chats'] as &$chat) {
         if ($chat['id'] == $chatId) {
-            $chat['pinned'] = !($chat['pinned'] ?? false);
+            $chat['isPinned'] = !($chat['isPinned'] ?? false);
             break;
         }
     }
     saveUsers($users);
     sendResponse(['success' => true]);
+
+} elseif ($action === 'list') {
+    sendResponse(['history' => $users[$userIndex]['chats']]);
 }
 
 sendResponse(['error' => 'Invalid action'], 400);

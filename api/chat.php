@@ -28,7 +28,9 @@ if ($userIndex === -1) {
 }
 
 // Find or create chat
+$action = $_GET['action'] ?? '';
 $currentChat = null;
+
 if ($chatId) {
     foreach ($users[$userIndex]['chats'] as &$chat) {
         if ($chat['id'] == $chatId) {
@@ -38,6 +40,14 @@ if ($chatId) {
     }
 }
 
+if ($action === 'load') {
+    if (!$currentChat) {
+        sendResponse(['error' => 'Chat not found'], 404);
+    }
+    sendResponse(['chat' => $currentChat]);
+}
+
+// Proceed with message sending if no action or action is empty
 if (!$currentChat) {
     $chatId = time() . rand(100, 999);
     $newChat = [
