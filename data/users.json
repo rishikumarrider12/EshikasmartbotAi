@@ -78,6 +78,128 @@
     "password": "001",
     "chats": [
       {
+        "id": "1767534869532",
+        "title": "What is the capital of France?",
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is the capital of France?"
+          },
+          {
+            "role": "bot",
+            "content": "Hello there! 👋 I am Eshika Smart Bot AI 🤖, created by N. Rishi Kumar (son of N. Chiranjeevi). Our Founder/Chairman at Eshika IT Solutions is Raghu Varma.\n\nThe capital of France is **Paris**! 🇫🇷 It's famous for the Eiffel Tower and amazing food! 🥐\n\nWhat else can I help you find out? 😊"
+          }
+        ]
+      },
+      {
+        "id": "1767534172616",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          },
+          {
+            "role": "bot",
+            "content": "I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi.\n\nHello there! 👋 It's wonderful to meet you! ✨ How can I assist you today? 😊"
+          }
+        ]
+      },
+      {
+        "id": "1767534089796",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533680148",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          },
+          {
+            "role": "bot",
+            "content": "Hello! 👋 I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi.\n\nHow can I assist you today? 🌟😊"
+          }
+        ]
+      },
+      {
+        "id": "1767533518614",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533391690",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533342759",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533319195",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533280266",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533244234",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533186606",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
         "id": "1767530776983",
         "title": "hi",
         "messages": [
@@ -144,22 +266,58 @@
     "password": "1234",
     "chats": [
       {
-        "id": "1767528325095",
-        "title": "tell me a story",
-        "messages": [
-          {
-            "role": "user",
-            "content": "tell me a story"
-          }
-        ]
-      },
-      {
-        "id": "1767528257154",
+        "id": "1767534996655",
         "title": "hi",
         "messages": [
           {
             "role": "user",
             "content": "hi"
+          },
+          {
+            "role": "bot",
+            "content": "Hi there! How can I assist you today? 🌟"
+          },
+          {
+            "role": "user",
+            "content": "who created you"
+          },
+          {
+            "role": "bot",
+            "content": "I am Eshika chatbot AI created by N. Rishi Kumar son of N. Chiranjeevi. 🌟"
+          },
+          {
+            "role": "user",
+            "content": "who is chairman of Eshika it soulutions"
+          },
+          {
+            "role": "bot",
+            "content": "Raghu Varma is the Founder/Chairman 🌟."
+          },
+          {
+            "role": "user",
+            "content": "ఫిజికల్ చైర్మన్ ఎవరు"
+          }
+        ]
+      },
+      {
+        "id": "1767534247524",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          },
+          {
+            "role": "bot",
+            "content": "Hello there! I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi 🤖.\n\nHow can I assist you today? Let's make some magic happen! ✨😊"
+          },
+          {
+            "role": "user",
+            "content": "who is pm of india"
+          },
+          {
+            "role": "bot",
+            "content": "I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi.\n\nThe current Prime Minister of India is **Narendra Modi**! 🇮🇳🌟 A very important role! 😊"
           }
         ]
       }

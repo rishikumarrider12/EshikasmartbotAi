@@ -9,7 +9,6 @@ const sendBtn = document.getElementById('send-btn');
 const authError = document.getElementById('auth-error');
 const micBtn = document.getElementById('mic-btn');
 const langSelect = document.getElementById('language-select');
-const modelSelect = document.getElementById('model-select');
 const settingsModal = document.getElementById('settings-modal');
 const proBadge = document.querySelector('.pro-badge');
 
@@ -17,6 +16,7 @@ let currentUser = null;
 let currentChatId = null;
 let recognition = null;
 let isRecording = false;
+let selectedImage = null; // Store base64 image data
 
 // Auto-resize textarea
 messageInput.addEventListener('input', function () {
@@ -74,7 +74,6 @@ function setupSpeechRecognition() {
 
 // Session Management
 window.addEventListener('load', () => {
-    loadModels();
     setupSpeechRecognition();
     const savedUser = localStorage.getItem('eshika_user');
     if (savedUser) {
@@ -339,23 +338,43 @@ function startNewChat() {
     messagesContainer.classList.add('hidden');
     messagesContainer.innerHTML = '';
     setInput('');
-    sidebar.classList.remove('open');
 }
 
-// Model Loader
-async function loadModels() {
-    try {
-        const res = await fetch('/models.json');
-        const data = await res.json();
-        modelSelect.innerHTML = data.models
-            .filter(m => m.supportedGenerationMethods.includes("generateContent"))
-            .map(m => `<option value="${m.name}">${m.displayName}</option>`)
-            .join('');
-    } catch (e) {
-        console.error("Failed to load models:", e);
-        modelSelect.innerHTML = '<option>Error loading models</option>';
-    }
+function toggleSidebar() {
+    sidebar.classList.toggle('collapsed');
 }
+
+// Image Handling
+function handleImageSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        selectedImage = {
+            data: e.target.result.split(',')[1],
+            mime: file.type
+        };
+        showImagePreview(e.target.result);
+    };
+    reader.readAsDataURL(file);
+}
+
+function showImagePreview(src) {
+    const container = document.getElementById('image-preview-container');
+    const img = document.getElementById('image-preview');
+    img.src = src;
+    container.classList.remove('hidden');
+}
+
+function removeImage() {
+    selectedImage = null;
+    document.getElementById('image-input').value = '';
+    document.getElementById('image-preview-container').classList.add('hidden');
+}
+
+
+
 
 
 // Text-to-Speech
@@ -404,9 +423,12 @@ async function sendMessage() {
                 email: currentUser.email,
                 chatId: currentChatId,
                 language: langSelect.value,
-                model: modelSelect.value // Send selected model
+                image: selectedImage // Add image data
             })
         });
+
+        if (selectedImage) removeImage(); // Clear after sending
+
 
         const data = await res.json();
         const loadingMsg = document.getElementById(loadingId);
@@ -475,9 +497,8 @@ function scrollToBottom() {
 
 // Sidebar Toggling
 const sidebar = document.querySelector('.sidebar');
-document.querySelector('.menu-btn').addEventListener('click', () => {
-    sidebar.classList.toggle('collapsed');
-});
+document.querySelector('.menu-btn').addEventListener('click', toggleSidebar);
 document.querySelector('.menu-btn-mobile').addEventListener('click', () => {
     sidebar.classList.toggle('open');
 });
+

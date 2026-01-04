@@ -164,7 +164,7 @@ app.post("/api/account/update", (req, res) => {
 // Chat Endpoint
 app.post("/chat", async (req, res) => {
   try {
-    const { message, email, chatId, language, model } = req.body;
+    const { message, email, chatId, language, model, image } = req.body;
 
     const user = users.find(u => u.email === email);
     if (!user) return res.status(401).json({ error: "User not found" });
@@ -208,22 +208,47 @@ app.post("/chat", async (req, res) => {
 
     // API Call
     const API_KEY = process.env.GEMINI_API_KEY;
-    const MODEL_NAME = model || "gemini-1.5-flash";
-    const modelId = MODEL_NAME.split('/').pop(); // Get just the ID part
+    const DEFAULT_MODEL = "gemini-flash-latest";
+    const selectedModel = (model && typeof model === 'string' && model.trim().length > 0) ? model : DEFAULT_MODEL;
+    const modelId = selectedModel.includes('/') ? selectedModel.split('/').pop() : selectedModel;
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${API_KEY}`;
 
+
     const langInstruction = language ? ` Please reply in this language code: ${language}.` : "";
+
+    const systemPrompt = `You are Eshika Smart Bot AI 🤖. Created by N. Rishi Kumar son of N. Chiranjeevi.
+Founder/Chairman: Raghu Varma.
+
+YOUR IDENTITY (ONLY mention if asked "who are you"):
+"I am Eshika chatbot AI created by N. Rishi Kumar son of N. Chiranjeevi."
+
+GUIDELINES:
+- BE CONCISE. Do NOT repeat your full intro in every message.
+- Use emojis 🌟.
+- Analyze images if provided.
+- Reply in ${language || 'English'}.`;
+
+
+    const contents = [{
+      role: "user",
+      parts: [
+        { text: `${systemPrompt}\n\nUser: ${message}` }
+      ]
+    }];
+
+    if (image && image.data && image.mime) {
+      contents[0].parts.push({
+        inline_data: {
+          mime_type: image.mime,
+          data: image.data
+        }
+      });
+    }
 
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: `You are Eshika Smart Bot AI 🤖. Intro: "I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi". \n\nKnowledge Base:\n- Founder and Chairman of Eshika IT Solutions & Eshika Training and Placements is **Raghu Varma**.\n\nStyle Guide:\n- Use emojis frequently to express emotion 🌟.\n- Be concise but friendly.\n- If the user speaks in a different language, reply in that language.${langInstruction}\n\nUser: ${message}`
-          }]
-        }]
-      })
+      body: JSON.stringify({ contents })
     });
 
     const data = await response.json();

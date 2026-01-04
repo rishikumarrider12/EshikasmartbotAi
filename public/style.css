@@ -242,6 +242,49 @@ button:hover {
     transition: transform 0.3s;
 }
 
+/* Image Preview Container */
+.image-preview-container {
+    position: absolute;
+    bottom: 120px;
+    left: 20px;
+    background: var(--sidebar-bg);
+    padding: 10px;
+    border-radius: 16px;
+    border: 1px solid #444746;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000;
+    animation: popIn 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.image-preview-container img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.remove-image-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+
 .new-chat-btn {
     background: var(--hover-bg);
     color: var(--text-secondary);
@@ -304,6 +347,7 @@ button:hover {
 
 .sidebar-item:hover {
     background: var(--hover-bg);
+    transform: translateX(5px);
 }
 
 .sidebar-item {
@@ -446,6 +490,31 @@ button:hover {
     background: var(--bg-color);
     border-bottom: 1px solid #333;
 }
+
+.desktop-menu-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--sidebar-bg);
+    border: 1px solid #333;
+    color: var(--text-secondary);
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 90;
+    transition: all 0.2s;
+}
+
+.desktop-menu-btn:hover {
+    color: var(--text-primary);
+    border-color: #444;
+    background: var(--hover-bg);
+}
+
 
 .chat-window {
     flex: 1;

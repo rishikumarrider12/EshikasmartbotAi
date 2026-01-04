@@ -15,6 +15,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="logo.png">
 </head>
 
 <body>
@@ -25,7 +26,7 @@
             <img src="logo.png" alt="Eshika Logo" class="login-logo">
             <h1>Eshika Smart Bot</h1>
             <p class="subtitle">Your intelligent AI assistant, crafted by N. Rishi Kumar sonof Chiranjeevi
-             
+
             </p>
             <div class="form-group">
                 <input type="text" id="username-input" placeholder="Username" required>
@@ -111,6 +112,10 @@
                 <span>Eshika Smart Bot</span>
             </header>
 
+            <button id="toggle-sidebar" class="desktop-menu-btn" onclick="toggleSidebar()">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+
             <div id="chat-window" class="chat-window">
                 <!-- Welcome Screen -->
                 <div id="welcome-screen" class="welcome-screen">
@@ -135,14 +140,18 @@
 
                 <!-- Messages Container -->
                 <div id="messages-container" class="messages-container hidden"></div>
+
+                <!-- Image Preview Area -->
+                <div id="image-preview-container" class="image-preview-container hidden">
+                    <img id="image-preview" src="" alt="Preview">
+                    <button class="remove-image-btn" onclick="removeImage()">&times;</button>
+                </div>
             </div>
 
             <!-- Input Area -->
             <div class="input-area-wrapper">
                 <div class="input-toolbar">
-                    <select id="model-select" class="lang-select">
-                        <!-- Models will be populated here -->
-                    </select>
+
                     <select id="language-select" class="lang-select">
                         <option value="en-US">🇺🇸 English</option>
                         <option value="hi-IN">🇮🇳 Hindi</option>
@@ -154,8 +163,10 @@
                 </div>
                 <div class="input-area glowing-border">
                     <div class="input-icons-left">
-                        <button class="icon-btn"><span
-                                class="material-symbols-outlined">add_photo_alternate</span></button>
+                        <button class="icon-btn" onclick="document.getElementById('image-input').click()">
+                            <span class="material-symbols-outlined">add_photo_alternate</span>
+                        </button>
+                        <input type="file" id="image-input" accept="image/*" hidden onchange="handleImageSelect(event)">
                     </div>
                     <textarea id="message-input" placeholder="Enter a prompt here" rows="1"></textarea>
                     <div class="input-icons-right">
@@ -169,7 +180,8 @@
                         </button>
                     </div>
                 </div>
-                <p class="disclaimer">Eshika Smart Bot may display inaccurate info. Made by N. Rishi Kumar sonof Chiranjeevi.</p>
+                <p class="disclaimer">Eshika Smart Bot may display inaccurate info. Made by N. Rishi Kumar sonof
+                    Chiranjeevi.</p>
             </div>
         </main>
     </div>
