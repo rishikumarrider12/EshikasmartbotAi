@@ -208,6 +208,11 @@ app.post("/chat", async (req, res) => {
 
     // API Call
     const API_KEY = process.env.GEMINI_API_KEY;
+    if (!API_KEY) {
+      console.error("CRITICAL: GEMINI_API_KEY is missing from environment variables!");
+      return res.status(500).json({ reply: "My API key is not configured correctly. Please check the server environment. 🔑" });
+    }
+
     const DEFAULT_MODEL = "gemini-flash-latest";
     const selectedModel = (model && typeof model === 'string' && model.trim().length > 0) ? model : DEFAULT_MODEL;
     const modelId = selectedModel.includes('/') ? selectedModel.split('/').pop() : selectedModel;
@@ -260,8 +265,8 @@ GUIDELINES:
       const errorMsg = data.error.message || "No error message provided";
       let reply = "I am having trouble connecting to my brain right now. Please try again.";
 
-      if (errorCode === 429) {
-        reply = "I'm a bit overwhelmed right now (Quota Exceeded). Please try again in a minute! 😅";
+      if (errorCode === 429 || errorMsg.toLowerCase().includes("quota") || errorMsg.toLowerCase().includes("overwhelmed")) {
+        reply = "I'm a bit overwhelmed right now (Quota Exceeded). Please try again in a minute or two! 😅";
       } else if (errorMsg.includes("API key")) {
         reply = "There's an issue with my API key connection. Please check the configuration. 🔑";
       } else {

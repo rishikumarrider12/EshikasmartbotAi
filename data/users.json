@@ -1,0 +1,410 @@
+[
+  {
+    "id": "1767363584650",
+    "username": "persist_test",
+    "email": "persist@test.com",
+    "password": "123",
+    "chats": [
+      {
+        "id": "1767364791466",
+        "title": "Hello",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello"
+          }
+        ]
+      },
+      {
+        "id": "1767364733427",
+        "title": "Hello",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello"
+          }
+        ]
+      },
+      {
+        "id": "1767364661503",
+        "title": "Hello",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello"
+          }
+        ]
+      },
+      {
+        "id": "1767364591838",
+        "title": "Test message",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Test message"
+          }
+        ]
+      },
+      {
+        "id": "1767364294158",
+        "title": "What is your purpose?",
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is your purpose?"
+          }
+        ]
+      },
+      {
+        "id": "1767363811878",
+        "title": "Who is the founder of Eshika I...",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Who is the founder of Eshika IT Solutions?"
+          },
+          {
+            "role": "bot",
+            "content": "Hello! I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi. 👋\n\nThe founder and Chairman of Eshika IT Solutions is **Raghu Varma**! ✨"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1767363630194",
+    "username": "vgf4gteetgeg",
+    "email": "RISHI@gmail.com",
+    "password": "001",
+    "chats": [
+      {
+        "id": "1767536444393",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          },
+          {
+            "role": "bot",
+            "content": "Hello! I am Eshika Smart Bot AI 🤖. How can I assist you today? 🌟"
+          }
+        ]
+      },
+      {
+        "id": "1767535923638",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767535893098",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767535804648",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767535719233",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767535617723",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767534869532",
+        "title": "What is the capital of France?",
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is the capital of France?"
+          },
+          {
+            "role": "bot",
+            "content": "Hello there! 👋 I am Eshika Smart Bot AI 🤖, created by N. Rishi Kumar (son of N. Chiranjeevi). Our Founder/Chairman at Eshika IT Solutions is Raghu Varma.\n\nThe capital of France is **Paris**! 🇫🇷 It's famous for the Eiffel Tower and amazing food! 🥐\n\nWhat else can I help you find out? 😊"
+          }
+        ]
+      },
+      {
+        "id": "1767534172616",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          },
+          {
+            "role": "bot",
+            "content": "I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi.\n\nHello there! 👋 It's wonderful to meet you! ✨ How can I assist you today? 😊"
+          }
+        ]
+      },
+      {
+        "id": "1767534089796",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533680148",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          },
+          {
+            "role": "bot",
+            "content": "Hello! 👋 I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi.\n\nHow can I assist you today? 🌟😊"
+          }
+        ]
+      },
+      {
+        "id": "1767533518614",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533391690",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533342759",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533319195",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533280266",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533244234",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767533186606",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767530776983",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767529492475",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      },
+      {
+        "id": "1767529449650",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          },
+          {
+            "role": "bot",
+            "content": "I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi.\n\nHello there! 👋 How can I assist you today? 😊🌟"
+          }
+        ]
+      },
+      {
+        "id": "1767513231979",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          },
+          {
+            "role": "bot",
+            "content": "I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi.\n\nHi there! 👋 How can I assist you today? 🌟😊"
+          }
+        ]
+      },
+      {
+        "id": "1767446745126",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1767527976511",
+    "username": "1234",
+    "email": "1234",
+    "password": "1234",
+    "chats": [
+      {
+        "id": "1767536512762",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          },
+          {
+            "role": "bot",
+            "content": "Hello there! 🌟 How can I assist you today?"
+          },
+          {
+            "role": "user",
+            "content": "give your all fueters"
+          },
+          {
+            "role": "user",
+            "content": "hi"
+          },
+          {
+            "role": "bot",
+            "content": "Hello! I'm Eshika Smart Bot AI 🤖. How can I assist you today? 🌟"
+          },
+          {
+            "role": "user",
+            "content": "tell about you"
+          },
+          {
+            "role": "bot",
+            "content": "I am Eshika Smart Bot AI 🤖.\n\nI was created by N. Rishi Kumar son of N. Chiranjeevi, and the Founder/Chairman is Raghu Varma.\n\nHow may I help you today? 🌟"
+          },
+          {
+            "role": "user",
+            "content": "give all reuters of you"
+          },
+          {
+            "role": "bot",
+            "content": "Hello! Here are my core details 🌟:\n\n*   **Type:** Eshika Smart Bot AI 🤖\n*   **Creator:** N. Rishi Kumar son of N. Chiranjeevi\n*   **Founder/Chairman:** Raghu Varma\n\nHow can I help you next? 💫"
+          },
+          {
+            "role": "user",
+            "content": "what can you do for me"
+          },
+          {
+            "role": "bot",
+            "content": "Hello! I can answer your questions, summarize information, generate creative content (like code or stories), and help you analyze data 📊.\n\nJust tell me what you need! 🌟"
+          },
+          {
+            "role": "user",
+            "content": "give a html code"
+          },
+          {
+            "role": "bot",
+            "content": "Here is a basic HTML5 boilerplate code 💻🌟:\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Eshika's Webpage</title>\n</head>\n<body>\n    <h1>Hello, World!</h1>\n    <p>This is a standard HTML structure.</p>\n</body>\n</html>\n```"
+          },
+          {
+            "role": "user",
+            "content": "write a portfolie code useing html css js"
+          },
+          {
+            "role": "bot",
+            "content": "That's a great project! Creating a portfolio is the perfect way to showcase your skills. 🌟\n\nHere are the essential code snippets for a basic portfolio using HTML, CSS, and minimal JS for interactivity.\n\n### 1. HTML (`index.html`)\n\nThis structure includes navigation, an intro section, and a project area.\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>My Portfolio</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n    <header>\n        <div class=\"logo\">Eshika Dev 💻</div>\n        <nav id=\"navbar\">\n            <a href=\"#about\">About</a>\n            <a href=\"#projects\">Projects</a>\n            <a href=\"#contact\">Contact</a>\n        </nav>\n        <button class=\"menu-toggle\">☰</button>\n    </header>\n\n    <main>\n        <section id=\"about\" class=\"hero\">\n            <h1>Hi, I'm Eshika.</h1>\n            <p>I build things for the web. Explore my work below!</p>\n        </section>\n\n        <section id=\"projects\">\n            <h2>Featured Projects</h2>\n            <div class=\"project-grid\">\n                <div class=\"project-card\">Project One 🚀</div>\n                <div class=\"project-card\">Project Two 💡</div>\n            </div>\n        </section>\n    </main>\n\n    <footer>\n        <p>&copy; 2024 Portfolio.</p>\n    </footer>\n\n    <script src=\"script.js\"></script>\n</body>\n</html>\n```\n\n---\n\n### 2. CSS (`style.css`)\n\nThis provides basic styling, ensuring responsiveness for the navigation and a clean layout.\n\n```css\n/* Basic Reset */\n* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n    font-family: sans-serif;\n}\n\nbody {\n    background-color: #f4f4f9;\n    color: #333;\n    line-height: 1.6;\n}\n\nheader {\n    background-color: #1a1a2e;\n    color: white;\n    padding: 1rem 5%;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n\n.logo {\n    font-size: 1.5rem;\n    font-weight: bold;\n}\n\n/* Navigation Styling */\n#navbar a {\n    color: white;\n    text-decoration: none;\n    margin-left: 20px;\n    transition: color 0.3s;\n}\n\n#navbar a:hover {\n    color: #00bcd4; /* Accent color */\n}\n\n/* Mobile Menu Button (Hidden on Desktop) */\n.menu-toggle {\n    display: none;\n    background: none;\n    border: none;\n    color: white;\n    font-size: 1.5rem;\n    cursor: pointer;\n}\n\n/* Sections */\nsection {\n    padding: 60px 5%;\n    min-height: 40vh;\n}\n\n.hero {\n    background-color: #e0f7fa;\n    text-align: center;\n}\n\n/* Project Grid */\n#projects {\n    background-color: white;\n}\n\n.project-grid {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n    gap: 20px;\n    margin-top: 30px;\n}\n\n.project-card {\n    background-color: #f4f4f9;\n    padding: 20px;\n    border-radius: 8px;\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\n    text-align: center;\n}\n\n/* Footer */\nfooter {\n    text-align: center;\n    padding: 15px;\n    background-color: #1a1a2e;\n    color: white;\n}\n\n/* --- Media Query for Mobile Responsiveness --- */\n@media (max-width: 768px) {\n    #navbar {\n        display: none; /* Hide nav links by default on small screens */\n        flex-direction: column;\n        width: 100%;\n        position: absolute;\n        top: 60px;\n        left: 0;\n        background-color: #1a1a2e;\n    }\n\n    #navbar.active {\n        display: flex; /* Show when active */\n    }\n\n    #navbar a {\n        margin: 0;\n        padding: 15px;\n        border-top: 1px solid #333;\n    }\n\n    .menu-toggle {\n        display: block;\n    }\n}\n```\n\n---\n\n### 3. JavaScript (`script.js`)\n\nThis adds simple interactivity, specifically toggling the mobile navigation menu.\n\n```javascript\ndocument.addEventListener('DOMContentLoaded', () => {\n    const menuToggle = document.querySelector('.menu-toggle');\n    const navbar = document.getElementById('navbar');\n\n    menuToggle.addEventListener('click', () => {\n        // Toggle the 'active' class on the navigation bar\n        navbar.classList.toggle('active');\n        \n        // Optional: Change the button text (☰ to X)\n        if (navbar.classList.contains('active')) {\n            menuToggle.textContent = 'X';\n        } else {\n            menuToggle.textContent = '☰';\n        }\n    });\n});\n```\n\nThis setup gives you a solid, responsive starting point! Happy coding! 💻✨"
+          }
+        ]
+      },
+      {
+        "id": "1767535427882",
+        "title": "give your all futers",
+        "messages": [
+          {
+            "role": "user",
+            "content": "give your all futers"
+          }
+        ]
+      }
+    ]
+  }
+]
