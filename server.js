@@ -208,9 +208,9 @@ app.post("/chat", async (req, res) => {
 
     // API Call
     const API_KEY = process.env.GEMINI_API_KEY;
-    const MODEL_NAME = model || "gemini-1.5-flash-latest";
-    const cleanModelName = MODEL_NAME.startsWith('models/') ? MODEL_NAME : `models/${MODEL_NAME}`;
-    const url = `https://generativelanguage.googleapis.com/v1beta/${cleanModelName}:generateContent?key=${API_KEY}`;
+    const MODEL_NAME = model || "gemini-1.5-flash";
+    const modelId = MODEL_NAME.split('/').pop(); // Get just the ID part
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${API_KEY}`;
 
     const langInstruction = language ? ` Please reply in this language code: ${language}.` : "";
 
