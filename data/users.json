@@ -78,7 +78,49 @@
     "password": "001",
     "chats": [
       {
+        "id": "1767513231979",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          },
+          {
+            "role": "bot",
+            "content": "I am Eshika chatbot Ai created by N. Rishi Kumar son of N. Chiranjeevi.\n\nHi there! 👋 How can I assist you today? 🌟😊"
+          }
+        ]
+      },
+      {
         "id": "1767446745126",
+        "title": "hi",
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1767527976511",
+    "username": "1234",
+    "email": "1234",
+    "password": "1234",
+    "chats": [
+      {
+        "id": "1767528325095",
+        "title": "tell me a story",
+        "messages": [
+          {
+            "role": "user",
+            "content": "tell me a story"
+          }
+        ]
+      },
+      {
+        "id": "1767528257154",
         "title": "hi",
         "messages": [
           {

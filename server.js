@@ -164,7 +164,7 @@ app.post("/api/account/update", (req, res) => {
 // Chat Endpoint
 app.post("/chat", async (req, res) => {
   try {
-    const { message, email, chatId, language } = req.body;
+    const { message, email, chatId, language, model } = req.body;
 
     const user = users.find(u => u.email === email);
     if (!user) return res.status(401).json({ error: "User not found" });
@@ -208,7 +208,7 @@ app.post("/chat", async (req, res) => {
 
     // API Call
     const API_KEY = process.env.GEMINI_API_KEY;
-    const MODEL_NAME = "gemini-flash-latest";
+    const MODEL_NAME = model || "gemini-flash-latest";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
 
     const langInstruction = language ? ` Please reply in this language code: ${language}.` : "";
@@ -229,7 +229,15 @@ app.post("/chat", async (req, res) => {
 
     if (data.error) {
       console.error("Gemini API Error:", JSON.stringify(data.error, null, 2));
-      return res.status(500).json({ reply: "I am having trouble connecting to my brain right now. Please try again." });
+
+      let reply = "I am having trouble connecting to my brain right now. Please try again.";
+      if (data.error.code === 429) {
+        reply = "I'm a bit overwhelmed right now (Quota Exceeded). Please try again in a minute! 😅";
+      } else if (data.error.message && data.error.message.includes("API key")) {
+        reply = "There's an issue with my API key connection. Please check the configuration. 🔑";
+      }
+
+      return res.status(500).json({ reply });
     }
 
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn't generate a response.";
@@ -248,5 +256,5 @@ app.post("/chat", async (req, res) => {
 
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
-  console.log(`Eshika Smart Bot by N. Rishi Kumar is active (Powered by Gemini).`);
+  console.log(`Eshika Smart Bot by N. Rishi Kumar is active .`);
 });
